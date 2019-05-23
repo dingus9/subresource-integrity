@@ -75,7 +75,8 @@ class Hash(object):
 
     @property
     def b58digest(self):
-        return base64.standard_b64encode(self._digest).decode('ascii')
+        return base64.standard_b64encode(
+            self._digest.encode('ascii')).decode('ascii')
 
     def __repr__(self):
         return "%s.%s('%s', '%s', '%s')" % (self.__class__.__module__,
@@ -157,4 +158,3 @@ def parse(integrity):
     matches = _INTEGRITY_PATTERN.findall(integrity)
     matches.sort(key=lambda t: RECOGNISED_ALGORITHMS.index(t[0]))
     return [Hash.fromhash(*match) for match in matches]
-
