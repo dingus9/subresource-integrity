@@ -75,8 +75,11 @@ class Hash(object):
 
     @property
     def b58digest(self):
-        return base64.standard_b64encode(
-            self._digest.encode('ascii')).decode('ascii')
+        if not isinstance(self._digest, bytes):
+            digest = self._digest.encode('ascii')
+        else:
+            digest = self._digest
+        return base64.standard_b64encode(digest).decode('ascii')
 
     def __repr__(self):
         return "%s.%s('%s', '%s', '%s')" % (self.__class__.__module__,
